@@ -12,6 +12,11 @@
 
 .PHONY: all bonus clean fclean re
 
+GREEN = \033[1;32m
+BLUE = \033[1;34m
+RED = \033[1;31m
+RESET = \033[0m
+
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = libft.a
@@ -28,18 +33,25 @@ all: $(NAME)
 
 $(OBJ)/%.o: $(SRC)/%.c $(DEPS)
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -I$(DEPS) -c $< -o $@
+	@echo "$(BLUE)Compiling$(RESET) $<..."
+	@$(CC) $(CFLAGS) -I$(DEPS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(AR) $@ $^
+	@echo "$(GREEN)Archiving$(RESET) $@..."
+	@$(AR) $@ $^
+	@echo "$(GREEN)Done!$(RESET)"
 
 bonus: all
 
 clean:
-	rm -rf $(OBJ)
+	@echo "$(RED)Cleaning$(RESET) object files..."
+	@rm -rf $(OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	@echo "$(RED)Removing$(RESET) $(NAME)..."
+	@rm -f $(NAME)
 
-re: fclean all
+re: fclean
+	@$(MAKE) --no-print-directory all
+
 
