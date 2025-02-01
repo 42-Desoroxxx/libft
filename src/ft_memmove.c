@@ -21,22 +21,14 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 		return (dest);
 	dest_copy = dest;
 	src_copy = src;
-	if (dest >= src)
+	if (dest < src)
+		ft_memcpy(dest, src, n);
+	else
 	{
 		dest_copy += n - 1;
 		src_copy += n - 1;
-	}
-	while (n-- > 0)
-	{
-		*dest_copy = *src_copy;
-		if (dest < src)
-			dest_copy++;
-		else
-			dest_copy--;
-		if (dest < src)
-			src_copy++;
-		else
-			src_copy--;
+		while (n-- > 0)
+			*dest_copy-- = *src_copy--;
 	}
 	return (dest);
 }
