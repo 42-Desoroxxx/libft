@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-ssize_t	print_arg(const int fd, va_list args, char type)
+static ssize_t	print_arg(const int fd, va_list args, char type)
 {
 	ssize_t	char_count;
 
@@ -36,7 +36,7 @@ ssize_t	print_arg(const int fd, va_list args, char type)
 	return (char_count);
 }
 
-bool	is_valid_specifier(const char c)
+static bool	is_valid_specifier(const char c)
 {
 	return (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u'
 		|| c == 'x' || c == 'X' || c == '%');
