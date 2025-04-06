@@ -14,7 +14,7 @@
 
 # define FT_PRINTF_H
 
-# include "libft.h"
+# include <libft.h>
 
 ssize_t	ft_fprintf(int fd, const char *str, ...);
 ssize_t	ft_printf(const char *str, ...);
