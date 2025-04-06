@@ -14,7 +14,7 @@
 
 # define LIBFT_H
 
-# define LIBFT_VERSION "0.1-Dev-1"
+# define LIBFT_VERSION "0.1-Dev-2"
 
 # include <stdlib.h>
 # include <unistd.h>
