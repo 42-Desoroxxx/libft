@@ -42,7 +42,7 @@ static bool	is_valid_specifier(const char c)
 		|| c == 'x' || c == 'X' || c == '%');
 }
 
-static ssize_t internal_fprintf(const int fd, const char *str, va_list args)
+static ssize_t	internal_fprintf(const int fd, const char *str, va_list args)
 {
 	ssize_t	char_count;
 	int		i;
@@ -70,7 +70,7 @@ ssize_t	ft_fprintf(const int fd, const char *str, ...)
 	return (char_count);
 }
 
-ssize_t ft_printf(const char *str, ...)
+ssize_t	ft_printf(const char *str, ...)
 {
 	ssize_t	char_count;
 	va_list	args;
