@@ -29,9 +29,9 @@ set(SOURCE_FILES
 	src/ft_memcpy.c
 	src/ft_memmove.c
 	src/ft_memset.c
-	src/ft_print_basic.c
-	src/ft_print_special.c
-	src/ft_printf.c
+	src/print/ft_print_basic.c
+	src/print/ft_print_special.c
+	src/print/ft_printf.c
 	src/ft_putchar_fd.c
 	src/ft_putendl_fd.c
 	src/ft_putnbr_fd.c
