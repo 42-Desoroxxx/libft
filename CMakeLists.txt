@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22.1)
-project(libft C)
+project(Libft C)
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror -Ofast -march=native -flto")

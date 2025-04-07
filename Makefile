@@ -19,7 +19,7 @@ RESET = \033[0m
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-NAME = libft.a
+NAME = Libft.a
 AR = ar rcs
 
 DEPS = includes
@@ -32,8 +32,8 @@ SRCS := src/ft_atoi.c  src/ft_bzero.c  src/ft_calloc.c  src/ft_calloc.c  \
 	src/ft_lstadd_front.c src/ft_lstclear.c  src/ft_lstdelone.c \
 	src/ft_lstiter.c  src/ft_lstlast.c  src/ft_lstmap.c  src/ft_lstnew.c \
 	src/ft_lstsize.c  src/ft_memchr.c  src/ft_memcmp.c  src/ft_memcpy.c \
-	src/ft_memmove.c  src/ft_memset.c  src/ft_print_basic.c \
-	src/ft_print_special.c src/ft_printf.c  src/ft_putchar_fd.c \
+	src/ft_memmove.c  src/ft_memset.c  src/print/ft_print_basic.c \
+	src/print/ft_print_special.c  src/print/ft_printf.c  src/ft_putchar_fd.c \
 	src/ft_putendl_fd.c  src/ft_putnbr_fd.c  src/ft_putstr_fd.c \
 	src/ft_split.c  src/ft_strdup.c  src/ft_striteri.c  src/ft_strjoin.c \
 	src/ft_strlcat.c  src/ft_strlcpy.c  src/ft_strlen.c  src/ft_strmapi.c \
