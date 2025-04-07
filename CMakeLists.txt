@@ -37,6 +37,7 @@ set(SOURCE_FILES
 	src/ft_putnbr_fd.c
 	src/ft_putstr_fd.c
 	src/ft_split.c
+	src/ft_strchr.c
 	src/ft_strdup.c
 	src/ft_striteri.c
 	src/ft_strjoin.c
