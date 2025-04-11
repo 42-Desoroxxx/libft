@@ -6,7 +6,7 @@
 /*   By: llage <desoroxxx@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 20:12:49 by llage             #+#    #+#             */
-/*   Updated: 2024/12/19 01:23:46 by llage            ###   ########.fr       */
+/*   Updated: 2025/04/07 19:42:46 by llage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,13 @@ static ssize_t	internal_fprintf(const int fd, const char *str, va_list args)
 
 	char_count = 0;
 	i = 0;
-	while (str[i++])
+	while (str[i])
 	{
 		if (str[i] == '%' && is_valid_specifier(str[i + 1]))
-			char_count += print_arg(fd, args, str[++i - 1]);
+			char_count += print_arg(fd, args, str[++i]);
 		else
 			char_count += print_char(fd, str[i]);
+		i++;
 	}
 	return (char_count);
 }
