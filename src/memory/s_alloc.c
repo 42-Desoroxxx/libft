@@ -28,6 +28,8 @@ void	*s_alloc(size_t size, size_t num)
 
 void	s_free(void *ptr)
 {
+	if (ptr == NULL)
+		return ;
 	free(ptr);
 	ptr = NULL;
 }
