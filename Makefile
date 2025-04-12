@@ -6,7 +6,7 @@
 #    By: llage <desoroxxx@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 22:55:02 by llage             #+#    #+#              #
-#    Updated: 2025/04/07 19:36:50 by llage            ###   ########.fr        #
+#    Updated: 2025/04/12 09:52:23 by llage            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ RED = \033[1;31m
 RESET = \033[0m
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -O3 -ffast-math -march=native -flto
 NAME = Libft.a
 AR = ar rcs
 

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.22.1)
 project(Libft C)
 
 set(CMAKE_C_STANDARD 99)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror -Ofast -march=native -flto")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror -O3 -ffast-math -march=native -flto")
 
 set(SOURCE_FILES
 	src/ft_atoi.c
