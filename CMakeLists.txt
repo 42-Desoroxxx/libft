@@ -54,6 +54,7 @@ set(SOURCE_FILES
 	src/ft_toupper.c
 	src/get_next_line.c
 	src/get_next_line_utils.c
+	src/dumbsignal.c
 	)
 
 add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})

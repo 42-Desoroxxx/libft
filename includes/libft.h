@@ -14,12 +14,15 @@
 
 # define LIBFT_H
 
-# define LIBFT_VERSION "0.1-Dev-3"
+# ifndef LIBFT_VERSION
+#  define LIBFT_VERSION "0.1-Dev-3"
+# endif
 
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
 # include <stdbool.h>
+# include <signal.h>
 
 typedef struct s_list
 {
@@ -70,5 +73,6 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+int		dumbsignal(int signum, void (*handler)(void));
 
 #endif
