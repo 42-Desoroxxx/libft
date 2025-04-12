@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_alloc.c                                         :+:      :+:    :+:   */
+/*   s_alloc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llage <llage@student.42angouleme.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -26,10 +26,10 @@ void	*s_alloc(size_t size, size_t num)
 	return (result);
 }
 
-void	s_free(void *ptr)
+void	s_free(void **ptr)
 {
-	if (ptr == NULL)
+	if (ptr == NULL || *ptr == NULL)
 		return ;
-	free(ptr);
-	ptr = NULL;
+	free(*ptr);
+	*ptr = NULL;
 }

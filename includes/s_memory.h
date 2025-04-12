@@ -17,6 +17,6 @@
 # include <libft.h>
 
 void	*s_alloc(size_t size, size_t num);
-void	s_free(void *ptr);
+void	s_free(void **ptr);
 
 #endif
