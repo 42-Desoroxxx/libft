@@ -54,6 +54,8 @@ set(SOURCE_FILES
 	src/ft_toupper.c
 	src/get_next_line.c
 	src/get_next_line_utils.c
+	includes/s_memory.h
+	src/memory/s_alloc.c
 	)
 
 add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})

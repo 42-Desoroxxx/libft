@@ -36,7 +36,8 @@ SRC_FILES := ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 	ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
     get_next_line.c get_next_line_utils.c \
 	ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c \
-    print/ft_printf.c print/ft_print_special.c print/ft_print_basic.c
+    print/ft_printf.c print/ft_print_special.c print/ft_print_basic.c \
+    src/memory/s_alloc.c
 SRCS := $(addprefix $(SRC)/,$(SRC_FILES))
 OBJS := $(patsubst $(SRC)/%,$(OBJ)/%,$(SRCS:.c=.o))
 
