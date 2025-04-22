@@ -6,7 +6,7 @@
 /*   By: llage <desoroxxx@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:31:29 by llage             #+#    #+#             */
-/*   Updated: 2025/04/22 11:10:58 by llage            ###   ########.fr       */
+/*   Updated: 2025/04/22 11:36:10 by llage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 # define LIBFT_H
 
-# define LIBFT_VERSION "0.1"
+# define LIBFT_VERSION "0.1.1"
 
 # include <stdlib.h>
 # include <unistd.h>
