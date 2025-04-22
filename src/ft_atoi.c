@@ -10,39 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <libft.h>
 #include <limits.h>
 
-static const char	*skip_whitespace(const char *nptr)
-{
-	while (*nptr == ' ' || (*nptr >= '\t' && *nptr <= '\r'))
-		nptr++;
-	return (nptr);
-}
-
-int	ft_atoi(const char *nptr)
+int	ft_atoi(const char *str)
 {
 	long long	result;
 	int			sign;
 
-	nptr = skip_whitespace(nptr);
+	str = skip_whitespace(str);
 	sign = 1;
-	if (*nptr == '-')
+	if (*str == '-')
 		sign = -1;
-	if (*nptr == '-' || *nptr == '+')
-		nptr++;
+	if (*str == '-' || *str == '+')
+		str++;
 	result = 0;
-	while (*nptr >= '0' && *nptr <= '9')
+	while (ft_isdigit(*str))
 	{
-		if ((sign == 1 && (result > (INT_MAX - (*nptr - '0')) / 10))
+		if ((sign == 1 && (result > (INT_MAX - (*str - '0')) / 10))
 			|| (sign == -1
-				&& (result > ((long)INT_MIN * -1 - (*nptr - '0')) / 10)))
+				&& (result > ((long)INT_MIN * -1 - (*str - '0')) / 10)))
 		{
 			if (sign == 1)
 				return (INT_MAX);
 			return (INT_MIN);
 		}
-		result = result * 10 + (*nptr - '0');
-		nptr++;
+		result = result * 10 + (*str - '0');
+		str++;
 	}
 	return ((int)(result * sign));
 }
