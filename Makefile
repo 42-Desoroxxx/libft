@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: llage <desoroxxx@gmail.com>                +#+  +:+       +#+         #
+#    By: llage <llage@student.42angouleme.fr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 22:55:02 by llage             #+#    #+#              #
 #    Updated: 2025/04/22 10:32:30 by llage            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY: all bonus clean fclean re
+.PHONY: all clean fclean re
 
 GREEN = \033[1;32m
 BLUE = \033[1;34m
@@ -53,8 +53,6 @@ $(NAME): $(OBJS)
 	@$(AR) $@ $^
 	@echo "$(GREEN)Done!$(RESET)"
 
-bonus: all
-
 clean:
 	@echo "$(RED)Cleaning$(RESET) object files..."
 	@rm -rf $(OBJ)
@@ -65,5 +63,3 @@ fclean: clean
 
 re: fclean
 	@$(MAKE) --no-print-directory all
-
-
