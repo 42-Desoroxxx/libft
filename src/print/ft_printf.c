@@ -23,7 +23,7 @@ static ssize_t	print_arg(const int fd, va_list args, char type)
 		char_count += print_str(fd, va_arg(args, char *));
 	else if (type == 'p')
 		char_count += print_ptr(fd, va_arg(args, void *));
-	else if (type == 'd' | type == 'i')
+	else if (type == 'd' || type == 'i')
 		char_count += print_nbr(fd, va_arg(args, int));
 	else if (type == 'u')
 		char_count += print_unbr(fd, va_arg(args, unsigned int));
