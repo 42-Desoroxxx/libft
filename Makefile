@@ -1,31 +1,56 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: llage <llage@student.42angouleme.fr>       +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/10/14 22:55:02 by llage             #+#    #+#              #
-#    Updated: 2025/04/22 10:32:30 by llage            ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+##############################################################################################
+#                                                                                            #
+#   /$$$$$$                                      /$$      /$$           /$$                  #
+#  /$$__  $$                                    | $$$    /$$$          | $$                  #
+# | $$  \__/  /$$$$$$  /$$$$$$$$ /$$   /$$      | $$$$  /$$$$  /$$$$$$ | $$   /$$  /$$$$$$   #
+# | $$       /$$__  $$|____ /$$/| $$  | $$      | $$ $$/$$ $$ |____  $$| $$  /$$/ /$$__  $$  #
+# | $$      | $$  \ $$   /$$$$/ | $$  | $$      | $$  $$$| $$  /$$$$$$$| $$$$$$/ | $$$$$$$$  #
+# | $$    $$| $$  | $$  /$$__/  | $$  | $$      | $$\  $ | $$ /$$__  $$| $$_  $$ | $$_____/  #
+# |  $$$$$$/|  $$$$$$/ /$$$$$$$$|  $$$$$$$      | $$ \/  | $$|  $$$$$$$| $$ \  $$|  $$$$$$$  #
+#  \______/  \______/ |________/ \____  $$      |__/     |__/ \_______/|__/  \__/ \_______/  #
+#                                /$$  | $$                                                   #
+#        )))                    |  $$$$$$/                                    Version 1.0    #
+#       (((                      \______/                                                    #
+#     +-----+                                   __..--''``---....___   _..._    __           #
+#     |     |]      /    //    // //  /// //_.-'    .-/";  `        ``<._  ``.''_ `. / // /  #
+#     `-----'   //  //  ///  ///     ///_.-' _..--.'_    \                    `( ) ) // //   #
+#         /   / // / ///  /      /// / (_..-' // (< _     ;_..__               ; `' / ///    #
+#     ///  //  /  /       // ///  /   / // // //  `-._,_)' // / ``--...____..-' /// / //     #
+#    / // / /// //  /// / / // //   //  /// //  /  ///  //  // /// / /  ///   /   / ///  //  #
+##############################################################################################
 
-.PHONY: all clean fclean re
+.PHONY: all debug clean fclean re re_debug
 
+NAME = libft.a
+MODE ?= release
+
+# Colors
 GREEN = \033[1;32m
 BLUE = \033[1;34m
 RED = \033[1;31m
 RESET = \033[0m
 
+# Compiler
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -O3 -ffast-math -march=native -flto
-NAME = libft.a
+RELEASE_FLAGS = -Wall -Wextra -Werror -O3 -ffast-math -march=native -flto
+DEBUG_FLAGS = -Wall -Wextra -O0 -fno-builtin -g
+ifeq ($(MODE),debug)
+    CFLAGS = $(DEBUG_FLAGS)
+    LIB_TARGET = debug
+else
+    CFLAGS = $(RELEASE_FLAGS)
+    LIB_TARGET = all
+endif
+
+# Archiver
 AR = ar rcs
 
-DEPS = includes
+# Directories
 SRC = src
 OBJ = obj
+INCLUDES = -Iincludes
 
+# Sources
 SRC_FILES := ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 	ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c ft_lstadd_back.c \
    	ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c ft_lstlast.c \
@@ -38,14 +63,20 @@ SRC_FILES := ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
     print/ft_printf.c print/ft_print_special.c print/ft_print_basic.c \
     memory/s_alloc.c str_utils.c
 SRCS := $(addprefix $(SRC)/,$(SRC_FILES))
-OBJS := $(patsubst $(SRC)/%,$(OBJ)/%,$(SRCS:.c=.o))
+OBJS := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRCS))
 
 all: $(NAME)
 
-$(OBJ)/%.o: $(SRC)/%.c $(DEPS)
-	@mkdir -p $(@D)
+debug:
+	@echo "$(GREEN)Building in debug mode$(RESET)"
+	@$(MAKE) --no-print-directory MODE=debug
+
+$(OBJ):
+	@mkdir -p $@ $(dir $(OBJS))
+
+$(OBJ)/%.o: $(SRC)/%.c | $(OBJ)
 	@echo "$(BLUE)Compiling$(RESET) $<..."
-	@$(CC) $(CFLAGS) -I$(DEPS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(OBJS)
 	@echo "$(GREEN)Archiving$(RESET) $@..."
@@ -53,12 +84,19 @@ $(NAME): $(OBJS)
 	@echo "$(GREEN)Done!$(RESET)"
 
 clean:
-	@echo "$(RED)Cleaning$(RESET) object files..."
+	@echo "$(RED)Cleaning$(RESET) $(NAME)'s object files..."
 	@rm -rf $(OBJ)
+	@for lib in $(LIB_DIRS); do \
+		$(MAKE) --no-print-directory -s -C $$lib clean; \
+	done
 
 fclean: clean
 	@echo "$(RED)Removing$(RESET) $(NAME)..."
 	@rm -f $(NAME)
+	@for lib in $(LIB_DIRS); do \
+		$(MAKE) --no-print-directory -s -C $$lib fclean; \
+	done
 
-re: fclean
-	@$(MAKE) --no-print-directory all
+re: fclean all
+
+re_debug: fclean debug
