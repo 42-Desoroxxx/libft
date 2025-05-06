@@ -61,7 +61,7 @@ SRC_FILES := ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
     get_next_line.c get_next_line_utils.c \
 	ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c \
     print/ft_printf.c print/ft_print_special.c print/ft_print_basic.c \
-    memory/s_alloc.c str_utils.c
+    memory/s_alloc.c str_utils.c ft_strncpy.c
 SRCS := $(addprefix $(SRC)/,$(SRC_FILES))
 OBJS := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRCS))
 
