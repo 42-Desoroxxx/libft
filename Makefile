@@ -9,7 +9,7 @@
 # |  $$$$$$/|  $$$$$$/ /$$$$$$$$|  $$$$$$$      | $$ \/  | $$|  $$$$$$$| $$ \  $$|  $$$$$$$  #
 #  \______/  \______/ |________/ \____  $$      |__/     |__/ \_______/|__/  \__/ \_______/  #
 #                                /$$  | $$                                                   #
-#        )))                    |  $$$$$$/                                    Version 1.0    #
+#        )))                    |  $$$$$$/                                    Version 1.4    #
 #       (((                      \______/                                                    #
 #     +-----+                                   __..--''``---....___   _..._    __           #
 #     |     |]      /    //    // //  /// //_.-'    .-/";  `        ``<._  ``.''_ `. / // /  #
@@ -19,10 +19,10 @@
 #    / // / /// //  /// / / // //   //  /// //  /  ///  //  // /// / /  ///   /   / ///  //  #
 ##############################################################################################
 
-.PHONY: all debug clean fclean re re_debug
+.PHONY: all debug clean fclean re re_debug sane re_sane
 
 NAME = libft.a
-MODE ?= release
+MAKE_MODE ?= release
 
 # Colors
 GREEN = \033[1;32m
@@ -32,14 +32,22 @@ RESET = \033[0m
 
 # Compiler
 CC = cc
-RELEASE_FLAGS = -Wall -Wextra -Werror -O3 -ffast-math -march=native -flto
-DEBUG_FLAGS = -Wall -Wextra -O0 -fno-builtin -g
-ifeq ($(MODE),debug)
-    CFLAGS = $(DEBUG_FLAGS)
-    LIB_TARGET = debug
+BASE_FLAGS = -Wall -Wextra -Werror=vla
+RELEASE_FLAGS = -Werror -O3 -ffast-math -march=native -flto
+DEBUG_FLAGS =  -g -O0 -fno-builtin -mno-omit-leaf-frame-pointer -fno-omit-frame-pointer -fno-ipa-icf -fstrict-flex-arrays=3
+SANE_FLAGS = -fsanitize=address,pointer-compare,pointer-subtract,leak,undefined,shift,shift-exponent,shift-base,integer-divide-by-zero,unreachable,vla-bound,null,signed-integer-overflow,bounds,bounds-strict,alignment,object-size,float-divide-by-zero,float-cast-overflow,nonnull-attribute,returns-nonnull-attribute,bool,enum,pointer-overflow,builtin -fsanitize-address-use-after-scope
+ifeq ($(MAKE_MODE),release)
+	CFLAGS = $(BASE_FLAGS) $(RELEASE_FLAGS)
 else
-    CFLAGS = $(RELEASE_FLAGS)
-    LIB_TARGET = all
+	ifeq ($(MAKE_MODE),debug)
+		CFLAGS = $(BASE_FLAGS) $(DEBUG_FLAGS)
+	else
+	 ifeq ($(MAKE_MODE),sane)
+	 	CFLAGS = $(BASE_FLAGS) $(DEBUG_FLAGS) $(SANE_FLAGS)
+	 else
+		$(error Unknown mode)
+		endif
+	endif
 endif
 
 # Archiver
@@ -69,7 +77,11 @@ all: $(NAME)
 
 debug:
 	@echo "$(GREEN)Building in debug mode$(RESET)"
-	@$(MAKE) --no-print-directory MODE=debug
+	@$(MAKE) --no-print-directory MAKE_MODE=debug
+
+sane:
+	@echo "$(GREEN)Building in sane mode$(RESET)"
+	@$(MAKE) --no-print-directory MAKE_MODE=sane
 
 $(OBJ):
 	@mkdir -p $@ $(dir $(OBJS))
@@ -100,3 +112,5 @@ fclean: clean
 re: fclean all
 
 re_debug: fclean debug
+
+re_sane: fclean sane
