@@ -6,32 +6,11 @@
 /*   By: llage <desoroxxx@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:10:04 by llage             #+#    #+#             */
-/*   Updated: 2024/10/23 02:32:40 by llage            ###   ########.fr       */
+/*   Updated: 2025/08/13 01:10:20 by llage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
-
-static char	*ft_strndup(const char *s, size_t n)
-{
-	size_t	length;
-	char	*result;
-	int		i;
-
-	length = ft_strlen(s);
-	if (length > n)
-		length = n;
-	result = ft_calloc(length + 1, sizeof(char));
-	if (result == NULL)
-		return (NULL);
-	i = 0;
-	while (s[i] && n--)
-	{
-		result[i] = s[i];
-		i++;
-	}
-	return (result);
-}
 
 static int	count_words(char const *s, const char c)
 {

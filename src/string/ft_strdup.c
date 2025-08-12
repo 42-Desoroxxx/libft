@@ -12,18 +12,18 @@
 
 #include <libft.h>
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(const char *str)
 {
 	char	*result;
 	int		i;
 
-	result = ft_calloc(ft_strlen(s) + 1, sizeof(char));
+	result = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	if (result == NULL)
 		return (NULL);
 	i = 0;
-	while (s[i])
+	while (str[i])
 	{
-		result[i] = s[i];
+		result[i] = str[i];
 		i++;
 	}
 	return (result);

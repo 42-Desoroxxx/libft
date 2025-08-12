@@ -61,15 +61,14 @@ INCLUDES = -Iincludes
 # Sources
 SRC_FILES := ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 	ft_isdigit.c ft_isprint.c ft_itoa.c ft_lstadd_back.c \
-   	ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c ft_lstlast.c \
+	ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c ft_lstlast.c \
 	ft_lstmap.c ft_lstnew.c ft_lstsize.c ft_tolower.c ft_toupper.c \
-    ft_atol.c ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c \
-    ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c \
-	ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c \
-    get_next_line.c get_next_line_utils.c \
+	ft_atol.c ft_split.c \
+	string/ft_strchr.c string/ft_strdup.c string/ft_striteri.c string/ft_strjoin.c string/ft_strlcat.c string/ft_strlcpy.c string/ft_strlen.c string/ft_strmapi.c string/ft_strncmp.c string/ft_strnstr.c string/ft_strrchr.c string/ft_strtrim.c string/ft_substr.c string/ft_strndup.c \
+	get_next_line.c get_next_line_utils.c \
 	ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c \
-    print/ft_printf.c print/ft_print_special.c print/ft_print_basic.c \
-    memory/s_alloc.c str_utils.c ft_strncpy.c
+	print/ft_printf.c print/ft_print_special.c print/ft_print_basic.c \
+	memory/s_alloc.c
 SRCS := $(addprefix $(SRC)/,$(SRC_FILES))
 OBJS := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRCS))
 
