@@ -6,7 +6,7 @@
 /*   By: llage <llage@student.42angouleme.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:31:51 by llage             #+#    #+#             */
-/*   Updated: 2025/08/14 23:31:51 by llage            ###   ########.fr       */
+/*   Updated: 2025/08/17 05:35:40 by logname          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ bool	map_set(t_map *map, char *key, char *value)
 	{
 		temp[i].key = map->entries[i].key;
 		temp[i].value = map->entries[i].value;
+		i++;
 	}
 	free(map->entries);
 	map->entries = temp;
