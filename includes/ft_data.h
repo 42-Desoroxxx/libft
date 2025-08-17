@@ -31,7 +31,8 @@ typedef struct s_map
 
 t_map	map_bzero(void);
 bool	map_set(t_map *map, char *key, char *value);
-char	*map_get(t_map *map, char *key);
+char	*map_get(const t_map *map, char *key);
+void	map_print(const t_map *map);
 void	map_unset(t_map *map, char *key);
 void	map_free(t_map *map);
 
