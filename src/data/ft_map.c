@@ -52,7 +52,7 @@ bool	map_set(t_map *map, char *key, char *value)
 	return (true);
 }
 
-char	*map_get(t_map *map, char *key)
+char	*map_get(const t_map *map, char *key)
 {
 	const size_t	key_len = ft_strlen(key);
 	char			*cur_key;
