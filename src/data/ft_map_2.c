@@ -21,7 +21,8 @@ void	map_print(const t_map *map)
 	i = 0;
 	while (i < map->size)
 	{
-		ft_printf("%s=%s\n", map->entries[i].key, map->entries[i].value);
+		if (map->entries[i].key != NULL)
+			ft_printf("%s=%s\n", map->entries[i].key, map->entries[i].value);
 		i++;
 	}
 }
