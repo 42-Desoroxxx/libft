@@ -6,7 +6,7 @@
 /*   By: llage <desoroxxx@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 03:27:14 by llage             #+#    #+#             */
-/*   Updated: 2024/11/15 08:50:29 by llage            ###   ########.fr       */
+/*   Updated: 2025/08/23 04:06:46 by llage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,14 @@ static char	*return_line_reset_i(char *line, ssize_t *buffer_i)
 	return (line);
 }
 
-static char	*get_next_line_2(int fd, char *buffer, ssize_t *buffer_i, char *line)
+static char	*get_next_line_2(int fd, char *buffer, char *line)
 {
-	ssize_t	read_r;
+	static ssize_t	buffer_i;
+	ssize_t			read_r;
 
 	while (1)
 	{
-		if (*buffer_i == 0)
+		if (buffer_i == 0)
 		{
 			read_r = read_into_buffer(fd, buffer, line);
 			if (read_r < 0)
@@ -63,12 +64,12 @@ static char	*get_next_line_2(int fd, char *buffer, ssize_t *buffer_i, char *line
 			if (read_r == 0)
 				return (line);
 		}
-		line = add_to_line(&line, buffer, buffer_i);
-		if (!buffer[*buffer_i] && line != NULL)
+		line = add_to_line(&line, buffer, &buffer_i);
+		if (!buffer[buffer_i] && line != NULL)
 		{
-			if (buffer[*buffer_i - 1] == '\n')
-				return (return_line_reset_i(line, buffer_i));
-			*buffer_i = 0;
+			if (buffer[buffer_i - 1] == '\n')
+				return (return_line_reset_i(line, &buffer_i));
+			buffer_i = 0;
 		}
 		else if (line == NULL || line[0] == '\0')
 			return (free_line_return_null(&line));
@@ -80,7 +81,6 @@ static char	*get_next_line_2(int fd, char *buffer, ssize_t *buffer_i, char *line
 char	*get_next_line(int fd)
 {
 	static char		buffer[BUFFER_SIZE + 1];
-	static ssize_t	buffer_i;
 	char			*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
@@ -88,5 +88,5 @@ char	*get_next_line(int fd)
 	line = ft_calloc(1, sizeof(char));
 	if (line == NULL)
 		return (NULL);
-	return (get_next_line_2(fd, buffer, &buffer_i, line));
+	return (get_next_line_2(fd, buffer, line));
 }
