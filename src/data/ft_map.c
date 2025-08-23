@@ -80,9 +80,9 @@ char	*map_get(const t_map *map, char *key)
 
 bool	map_unset(t_map *map, char *key)
 {
-	char			*cur_key;
-	t_map_entry		*temp;
-	size_t			i;
+	t_map_entry	*temp;
+	size_t		i;
+	size_t		j;
 
 	if (map_get(map, key) == NULL)
 		return (true);
@@ -90,15 +90,18 @@ bool	map_unset(t_map *map, char *key)
 	if (temp == NULL)
 		return (false);
 	i = -1;
+	j = 0;
 	while (++i < map->size)
 	{
-		cur_key = map->entries[i].key;
-		if (!ft_strncmp(key, cur_key, ft_strlen(key) + 1))
+		if (!ft_strncmp(key, map->entries[i].key, ft_strlen(key) + 1))
 		{
-			free(cur_key);
+			free(map->entries[i].key);
+			free(map->entries[i].value);
 			continue ;
 		}
-		temp[i].key = cur_key;
+		temp[j].key =  map->entries[i].key;
+		temp[j].value = map->entries[i].value;
+		j++;
 	}
 	free(map->entries);
 	map->entries = temp;
