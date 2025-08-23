@@ -6,7 +6,7 @@
 /*   By: llage <llage@student.42angouleme.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 22:53:52 by llage             #+#    #+#             */
-/*   Updated: 2025/08/23 03:45:04 by llage            ###   ########.fr       */
+/*   Updated: 2025/08/23 04:01:17 by llage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,26 @@ static bool	grow(t_map *map)
  */
 bool	map_set(t_map *map, char *key, char *value)
 {
-	char	*found_value;
+	size_t	i;
 
-	found_value = map_get(map, key);
-	if (found_value != NULL)
+	i = -1;
+	while (++i < map->size)
 	{
-		free(found_value);
-		found_value = ft_strdup(value);
-		return (true);
+		if (!ft_strncmp(key, map->entries[i].key, ft_strlen(key) + 1))
+		{
+			free(map->entries[i].key);
+			map->entries[i].key = ft_strdup(key);
+			return (true);
+		}
 	}
 	grow(map);
-	map->entries[map->size - 1].key = ft_strdup(key);
-	if (map->entries[map->size - 1].key == NULL)
+	map->entries[i].key = ft_strdup(key);
+	if (map->entries[i].key == NULL)
 		return (false);
 	if (value == NULL)
 		return (true);
-	map->entries[map->size - 1].value = ft_strdup(value);
-	if (map->entries[map->size - 1].value == NULL)
+	map->entries[i].value = ft_strdup(value);
+	if (map->entries[i].value == NULL)
 		return (false);
 	return (true);
 }
