@@ -63,33 +63,39 @@ char	*map_get(const t_map *map, char *key)
 	while (i < map->size)
 	{
 		cur_key = map->entries[i].key;
-		if (cur_key != NULL && ft_strlen(cur_key) == key_len
-			&& !ft_strncmp(key, cur_key, key_len + 1))
+		if (ft_strlen(cur_key) == key_len && !ft_strncmp(key, cur_key, key_len + 1))
 			return (map->entries[i].value);
 		i++;
 	}
 	return (NULL);
 }
 
-void	map_unset(t_map *map, char *key)
+bool	map_unset(t_map *map, char *key)
 {
-	const size_t	key_len = ft_strlen(key);
 	char			*cur_key;
+	t_map_entry		*temp;
 	size_t			i;
 
-	i = 0;
-	while (i < map->size)
+	if (map_get(map, key) == NULL)
+		return (true);
+	temp = ft_calloc(map->size - 1, sizeof(t_map_entry));
+	if (temp == NULL)
+		return (false);
+	i = -1;
+	while (++i < map->size)
 	{
 		cur_key = map->entries[i].key;
-		if (cur_key != NULL && ft_strlen(cur_key) == key_len
-			&& !ft_strncmp(key, cur_key, key_len + 1))
+		if (ft_strncmp(key, cur_key, ft_strlen(key) + 1))
 		{
-			free(map->entries[i].key);
-			map->entries[i].key = NULL;
-			return ;
+			free(cur_key);
+			continue ;
 		}
-		i++;
+		temp[i].key = cur_key;
 	}
+	free(map->entries);
+	map->entries = temp;
+	map->size--;
+	return (true);
 }
 
 void	map_free(t_map *map)
