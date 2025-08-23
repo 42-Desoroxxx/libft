@@ -9,7 +9,7 @@
 # |  $$$$$$/|  $$$$$$/ /$$$$$$$$|  $$$$$$$      | $$ \/  | $$|  $$$$$$$| $$ \  $$|  $$$$$$$  #
 #  \______/  \______/ |________/ \____  $$      |__/     |__/ \_______/|__/  \__/ \_______/  #
 #                                /$$  | $$                                                   #
-#        )))                    |  $$$$$$/                                    Version 1.4    #
+#        )))                    |  $$$$$$/                                    Version 1.5    #
 #       (((                      \______/                                                    #
 #     +-----+                                   __..--''``---....___   _..._    __           #
 #     |     |]      /    //    // //  /// //_.-'    .-/";  `        ``<._  ``.''_ `. / // /  #
@@ -32,8 +32,8 @@ RESET = \033[0m
 
 # Compiler
 CC = cc
-BASE_FLAGS = -Wall -Wextra -Werror=vla
-RELEASE_FLAGS = -Werror -O3 -ffast-math -march=native -flto
+BASE_FLAGS = -Wall -Wextra -Werror=vla -pedantic-errors -Werror=int-conversion -Werror=incompatible-pointer-types -Werror=implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -flto=thin
+RELEASE_FLAGS = -Werror -O3 -ffast-math -march=native
 DEBUG_FLAGS =  -g -O0 -fno-builtin -mno-omit-leaf-frame-pointer -fno-omit-frame-pointer -fstrict-flex-arrays=3
 SANE_FLAGS = -fsanitize=address,pointer-compare,pointer-subtract,leak,undefined,shift,shift-exponent,shift-base,integer-divide-by-zero,unreachable,vla-bound,null,signed-integer-overflow,bounds,alignment,float-divide-by-zero,float-cast-overflow,nonnull-attribute,returns-nonnull-attribute,bool,enum,pointer-overflow,builtin -fsanitize-address-use-after-scope
 ifeq ($(MAKE_MODE),release)
@@ -73,15 +73,16 @@ SRC_FILES := ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 SRCS := $(addprefix $(SRC)/,$(SRC_FILES))
 OBJS := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRCS))
 
-all: $(NAME)
+all:
+	@$(MAKE) -j --no-print-directory $(NAME)
 
 debug:
 	@echo "$(GREEN)Building in debug mode$(RESET)"
-	@$(MAKE) --no-print-directory MAKE_MODE=debug
+	@$(MAKE) -j --no-print-directory MAKE_MODE=debug
 
 sane:
 	@echo "$(GREEN)Building in sane mode$(RESET)"
-	@$(MAKE) --no-print-directory MAKE_MODE=sane
+	@$(MAKE) -j --no-print-directory MAKE_MODE=sane
 
 $(OBJ):
 	@mkdir -p $@ $(dir $(OBJS))
@@ -109,8 +110,13 @@ fclean: clean
 		$(MAKE) --no-print-directory -s -C $$lib fclean; \
 	done
 
-re: fclean all
+re: fclean
+	@$(MAKE) -j --no-print-directory all
 
-re_debug: fclean debug
+re_debug: fclean
+	@$(MAKE) -j --no-print-directory debug
 
-re_sane: fclean sane
+re_sane: fclean
+	@$(MAKE) -j --no-print-directory sane
+
+bonus: all
