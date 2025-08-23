@@ -47,7 +47,7 @@ bool	map_set(t_map *map, char *key, char *value)
 		if (!ft_strncmp(key, map->entries[i].key, ft_strlen(key) + 1))
 		{
 			free(map->entries[i].value);
-			map->entries[i].value = ft_strdup(key);
+			map->entries[i].value = ft_strdup(value);
 			return (true);
 		}
 	}
