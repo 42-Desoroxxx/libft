@@ -6,25 +6,15 @@
 /*   By: llage <llage@student.42angouleme.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 22:53:52 by llage             #+#    #+#             */
-/*   Updated: 2025/08/23 02:34:34 by llage            ###   ########.fr       */
+/*   Updated: 2025/08/23 03:45:04 by llage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 #include <ft_data.h>
+#include <ft_printf.h>
 
-t_map	map_bzero(void)
-{
-	return ((t_map){
-		.entries = NULL,
-		.size = 0,
-	});
-}
-
-/*
- * @return true if sucessful, false otherwise
- */
-bool	map_set(t_map *map, char *key, char *value)
+static bool	grow(t_map *map)
 {
 	t_map_entry	*temp;
 	size_t		i;
@@ -41,13 +31,31 @@ bool	map_set(t_map *map, char *key, char *value)
 	free(map->entries);
 	map->entries = temp;
 	map->size++;
-	map->entries[i].key = ft_strdup(key);
-	if (map->entries[i].key == NULL)
+	return (true);
+}
+
+/*
+ * @return true if sucessful, false otherwise
+ */
+bool	map_set(t_map *map, char *key, char *value)
+{
+	char	*found_value;
+
+	found_value = map_get(map, key);
+	if (found_value != NULL)
+	{
+		free(found_value);
+		found_value = ft_strdup(value);
+		return (true);
+	}
+	grow(map);
+	map->entries[map->size - 1].key = ft_strdup(key);
+	if (map->entries[map->size - 1].key == NULL)
 		return (false);
 	if (value == NULL)
 		return (true);
-	map->entries[i].value = ft_strdup(value);
-	if (map->entries[i].value == NULL)
+	map->entries[map->size - 1].value = ft_strdup(value);
+	if (map->entries[map->size - 1].value == NULL)
 		return (false);
 	return (true);
 }
@@ -95,17 +103,11 @@ bool	map_unset(t_map *map, char *key)
 	return (true);
 }
 
-void	map_free(t_map *map)
+void	map_print(const t_map *map)
 {
 	size_t	i;
 
-	i = 0;
-	while (i < map->size)
-	{
-		free(map->entries[i].key);
-		free(map->entries[i].value);
-		i++;
-	}
-	free(map->entries);
-	*map = map_bzero();
+	i = -1;
+	while (++i < map->size)
+		ft_printf("%s=%s\n", map->entries[i].key, map->entries[i].value);
 }
