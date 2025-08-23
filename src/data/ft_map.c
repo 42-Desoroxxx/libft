@@ -32,12 +32,11 @@ bool	map_set(t_map *map, char *key, char *value)
 	temp = ft_calloc(map->size + 1, sizeof(t_map_entry));
 	if (temp == NULL)
 		return (false);
-	i = 0;
-	while (i < map->size)
+	i = -1;
+	while (++i < map->size)
 	{
 		temp[i].key = map->entries[i].key;
 		temp[i].value = map->entries[i].value;
-		i++;
 	}
 	free(map->entries);
 	map->entries = temp;
@@ -55,17 +54,15 @@ bool	map_set(t_map *map, char *key, char *value)
 
 char	*map_get(const t_map *map, char *key)
 {
-	const size_t	key_len = ft_strlen(key);
 	char			*cur_key;
 	size_t			i;
 
-	i = 0;
-	while (i < map->size)
+	i = -1;
+	while (++i < map->size)
 	{
 		cur_key = map->entries[i].key;
-		if (ft_strlen(cur_key) == key_len && !ft_strncmp(key, cur_key, key_len + 1))
+		if (!ft_strncmp(key, cur_key, ft_strlen(key) + 1))
 			return (map->entries[i].value);
-		i++;
 	}
 	return (NULL);
 }
