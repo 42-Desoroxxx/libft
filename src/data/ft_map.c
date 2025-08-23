@@ -46,8 +46,8 @@ bool	map_set(t_map *map, char *key, char *value)
 	{
 		if (!ft_strncmp(key, map->entries[i].key, ft_strlen(key) + 1))
 		{
-			free(map->entries[i].key);
-			map->entries[i].key = ft_strdup(key);
+			free(map->entries[i].value);
+			map->entries[i].value = ft_strdup(key);
 			return (true);
 		}
 	}
@@ -93,7 +93,7 @@ bool	map_unset(t_map *map, char *key)
 	while (++i < map->size)
 	{
 		cur_key = map->entries[i].key;
-		if (ft_strncmp(key, cur_key, ft_strlen(key) + 1))
+		if (!ft_strncmp(key, cur_key, ft_strlen(key) + 1))
 		{
 			free(cur_key);
 			continue ;
