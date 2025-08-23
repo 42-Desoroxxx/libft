@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*add_to_line(char **line, const char *buffer, ssize_t *buffer_i)
+static char	*add_to_line(char **line, const char *buffer, ssize_t *buffer_i)
 {
 	ssize_t	line_length;
 	ssize_t	to_add_length;
@@ -32,7 +32,7 @@ char	*add_to_line(char **line, const char *buffer, ssize_t *buffer_i)
 	return (new_line);
 }
 
-ssize_t	read_into_buffer(const int fd, char *buffer, const char *line)
+static ssize_t	read_into_buffer(const int fd, char *buffer, const char *line)
 {
 	ssize_t	read_r;
 
@@ -43,13 +43,13 @@ ssize_t	read_into_buffer(const int fd, char *buffer, const char *line)
 	return (read_r);
 }
 
-char	*return_line_reset_i(char *line, ssize_t *buffer_i)
+static char	*return_line_reset_i(char *line, ssize_t *buffer_i)
 {
 	*buffer_i = 0;
 	return (line);
 }
 
-char	*get_next_line_2(int fd, char *buffer, ssize_t *buffer_i, char *line)
+static char	*get_next_line_2(int fd, char *buffer, ssize_t *buffer_i, char *line)
 {
 	ssize_t	read_r;
 

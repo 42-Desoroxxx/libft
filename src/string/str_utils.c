@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <libft.h>
+
 const char	*skip_whitespace(const char *str)
 {
 	while (*str == ' ' || (*str >= '\t' && *str <= '\r'))
