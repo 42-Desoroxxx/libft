@@ -6,7 +6,7 @@
 /*   By: llage <desoroxxx@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:31:29 by llage             #+#    #+#             */
-/*   Updated: 2025/04/22 11:36:10 by llage            ###   ########.fr       */
+/*   Updated: 2025/08/25 07:27:45 by llage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 char		*ft_strndup(const char *str, size_t n);
 char		*ft_strdup(const char *str);
+bool		ft_str_equal(const char *s1, const char *s2);
 
 #endif
