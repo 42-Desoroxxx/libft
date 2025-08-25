@@ -96,12 +96,10 @@ bool	map_unset(t_map *map, char *key)
 		if (!ft_strncmp(key, map->entries[i].key, ft_strlen(key) + 1))
 		{
 			free(map->entries[i].key);
-			free(map->entries[i].value);
-			continue ;
+			free(map->entries[i++].value);
 		}
-		temp[j].key =  map->entries[i].key;
-		temp[j].value = map->entries[i].value;
-		j++;
+		temp[j].key = map->entries[i].key;
+		temp[j++].value = map->entries[i].value;
 	}
 	free(map->entries);
 	map->entries = temp;
