@@ -13,85 +13,75 @@
 #include <libft.h>
 #include <ft_data.h>
 
+/*
+ * @return true if successful, false otherwise
+ */
 static bool	grow(t_map *map)
 {
-	t_map_entry	*temp;
+	t_map_entry	*new_entries;
 	size_t		i;
 
-	temp = ft_calloc(map->size + 1, sizeof(t_map_entry));
-	if (temp == NULL)
+	new_entries = ft_calloc(map->size + 1, sizeof(t_map_entry));
+	if (new_entries == NULL)
 		return (false);
 	i = -1;
 	while (++i < map->size)
-	{
-		temp[i].key = map->entries[i].key;
-		temp[i].value = map->entries[i].value;
-	}
+		new_entries[i] = map->entries[i];
 	free(map->entries);
-	map->entries = temp;
+	map->entries = new_entries;
 	map->size++;
 	return (true);
 }
 
-static	t_map_entry	*get_entry(t_map *map, char *key)
-{
-	char			*cur_key;
-	size_t			i;
-
-	i = -1;
-	while (++i < map->size)
-	{
-		cur_key = map->entries[i].key;
-		if (!ft_strncmp(key, cur_key, ft_strlen(key) + 1))
-			return (&map->entries[i]);
-	}
-	return (NULL);
-}
-
 /*
- * @return true if sucessful, false otherwise
+ * @return the entry if successful, NULL otherwise
  */
-bool	map_set(t_map *map, char *key, char *value)
+static	t_map_entry	*get_entry(const t_map *map, char *key)
 {
 	size_t	i;
 
 	i = -1;
 	while (++i < map->size)
+		if (ft_str_equal(key, map->entries[i].key))
+			return (&map->entries[i]);
+	return (NULL);
+}
+
+/*
+ * @return the value if successful, NULL otherwise
+ */
+char	*map_get(const t_map *map, char *key)
+{
+	return (get_entry(map, key)->value);
+}
+
+/*
+ * @return true if successful, false otherwise
+ */
+bool	map_set(t_map *map, char *key, char *value)
+{
+	t_map_entry	*temp;
+
+	temp = get_entry(map, key);
+	if (temp != NULL)
 	{
-		if (!ft_strncmp(key, map->entries[i].key, ft_strlen(key) + 1))
-		{
-			free(map->entries[i].value);
-			map->entries[i].value = ft_strdup(value);
-			return (true);
-		}
+		free(temp->value);
+		temp->value = ft_strdup(value);
+		return (true);
 	}
 	grow(map);
-	map->entries[i].key = ft_strdup(key);
-	if (map->entries[i].key == NULL)
+	map->entries[map->size - 1].key = ft_strdup(key);
+	if (map->entries[map->size - 1].key == NULL)
 		return (false);
-	if (value == NULL)
-		return (true);
-	map->entries[i].value = ft_strdup(value);
-	if (map->entries[i].value == NULL)
+	map->entries[map->size - 1].value = ft_strdup(value);
+	if (map->entries[map->size - 1].value == NULL)
 		return (false);
 	return (true);
 }
 
-char	*map_get(const t_map *map, char *key)
-{
-	char			*cur_key;
-	size_t			i;
-
-	i = -1;
-	while (++i < map->size)
-	{
-		cur_key = map->entries[i].key;
-		if (!ft_strncmp(key, cur_key, ft_strlen(key) + 1))
-			return (map->entries[i].value);
-	}
-	return (NULL);
-}
-
+/*
+ * @return true if successful, false otherwise
+ */
 bool	map_unset(t_map *map, char *key)
 {
 	t_map_entry	*temp;
