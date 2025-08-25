@@ -6,13 +6,12 @@
 /*   By: llage <llage@student.42angouleme.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 22:53:52 by llage             #+#    #+#             */
-/*   Updated: 2025/08/23 04:01:17 by llage            ###   ########.fr       */
+/*   Updated: 2025/08/25 06:52:46 by llage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 #include <ft_data.h>
-#include <ft_printf.h>
 
 static bool	grow(t_map *map)
 {
@@ -32,6 +31,21 @@ static bool	grow(t_map *map)
 	map->entries = temp;
 	map->size++;
 	return (true);
+}
+
+static	t_map_entry	*get_entry(t_map *map, char *key)
+{
+	char			*cur_key;
+	size_t			i;
+
+	i = -1;
+	while (++i < map->size)
+	{
+		cur_key = map->entries[i].key;
+		if (!ft_strncmp(key, cur_key, ft_strlen(key) + 1))
+			return (&map->entries[i]);
+	}
+	return (NULL);
 }
 
 /*
@@ -84,34 +98,23 @@ bool	map_unset(t_map *map, char *key)
 	size_t		i;
 	size_t		j;
 
-	if (map_get(map, key) == NULL)
+	temp = get_entry(map, key);
+	if (temp == NULL)
 		return (true);
+	free(temp->key);
+	temp->key = NULL;
+	free(temp->value);
+	temp->value = NULL;
 	temp = ft_calloc(map->size - 1, sizeof(t_map_entry));
 	if (temp == NULL)
 		return (false);
 	i = -1;
 	j = 0;
 	while (++i < map->size)
-	{
-		if (!ft_strncmp(key, map->entries[i].key, ft_strlen(key) + 1))
-		{
-			free(map->entries[i].key);
-			free(map->entries[i++].value);
-		}
-		temp[j].key = map->entries[i].key;
-		temp[j++].value = map->entries[i].value;
-	}
+		if (map->entries[i].key != NULL)
+			temp[j++] = map->entries[i];
 	free(map->entries);
 	map->entries = temp;
 	map->size--;
 	return (true);
-}
-
-void	map_print(const t_map *map)
-{
-	size_t	i;
-
-	i = -1;
-	while (++i < map->size)
-		ft_printf("%s=%s\n", map->entries[i].key, map->entries[i].value);
 }
