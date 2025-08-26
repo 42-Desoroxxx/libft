@@ -14,6 +14,10 @@
 
 bool	ft_str_equal(const char *s1, const char *s2)
 {
+	if (s1 == NULL && s2 == NULL)
+		return (true);
+	if (s1 == NULL || s2 == NULL)
+		return (false);
 	while (*s1 && *s2 && *s1 == *s2)
 	{
 		s1++;
