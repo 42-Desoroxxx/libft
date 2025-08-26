@@ -74,5 +74,6 @@ void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 char		*ft_strndup(const char *str, size_t n);
 char		*ft_strdup(const char *str);
 bool		ft_str_equal(const char *s1, const char *s2);
+char		*ft_str_add(char const *dest, char const *src);
 
 #endif
