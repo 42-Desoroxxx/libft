@@ -6,7 +6,7 @@
 /*   By: llage <llage@student.42angouleme.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 22:53:52 by llage             #+#    #+#             */
-/*   Updated: 2025/08/25 06:52:46 by llage            ###   ########.fr       */
+/*   Updated: 2025/08/26 05:27:47 by llage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@ static	t_map_entry	*get_entry(const t_map *map, char *key)
  */
 char	*map_get(const t_map *map, char *key)
 {
-	return (get_entry(map, key)->value);
+	const t_map_entry	*result = get_entry(map, key);
+
+	if (result == NULL)
+		return (NULL);
+	return (result->value);
 }
 
 /*
