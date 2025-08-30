@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <libft.h>
+#include <ft_memory.h>
 
 static int	count_words(char const *s, const char c)
 {

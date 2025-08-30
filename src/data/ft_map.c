@@ -12,6 +12,7 @@
 
 #include <libft.h>
 #include <ft_data.h>
+#include <ft_memory.h>
 
 /*
  * @return true if successful, false otherwise

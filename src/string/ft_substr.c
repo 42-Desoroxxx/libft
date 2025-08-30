@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <libft.h>
+#include <ft_memory.h>
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {

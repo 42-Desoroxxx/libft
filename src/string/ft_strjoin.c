@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <libft.h>
+#include <ft_memory.h>
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

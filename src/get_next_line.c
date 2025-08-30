@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include <get_next_line.h>
+#include <ft_memory.h>
 
 static char	*add_to_line(char **line, const char *buffer, ssize_t *buffer_i)
 {

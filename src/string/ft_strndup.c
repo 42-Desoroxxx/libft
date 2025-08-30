@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <libft.h>
+#include <ft_memory.h>
 
 char	*ft_strndup(const char *str, size_t n)
 {

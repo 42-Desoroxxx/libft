@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llage <desoroxxx@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/09 16:59:38 by llage             #+#    #+#             */
-/*   Updated: 2024/10/09 16:59:54 by llage            ###   ########.fr       */
+/*   Created: 2024/10/09 21:26:23 by llage             #+#    #+#             */
+/*   Updated: 2024/10/20 12:01:42 by llage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include <ft_memory.h>
 
-void	*ft_memset(void *s, int c, size_t n)
+/**
+ * Sets the first `n` bytes of the memory area pointed to by `s` to zero.
+ *
+ * @param s A pointer to the memory area to be zeroed.
+ * @param n The number of bytes in the memory area to set to zero.
+ */
+void	ft_bzero(void *s, size_t n)
 {
-	unsigned char	*s_copy;
-
-	s_copy = s;
-	while (n--)
-		*s_copy++ = c;
-	return (s);
+	ft_memset(s, '\0', n);
 }

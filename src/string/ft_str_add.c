@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <libft.h>
+#include <ft_memory.h>
 
 char	*ft_str_add(char const *dest, char const *src)
 {

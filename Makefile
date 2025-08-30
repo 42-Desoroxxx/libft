@@ -56,16 +56,15 @@ INCLUDES = -Iincludes
 
 # Sources
 SRC_FILES := \
-	ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
+	ft_atoi.c ft_isalnum.c ft_isalpha.c \
 	ft_isdigit.c ft_isprint.c ft_itoa.c ft_lstadd_back.c \
 	ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c ft_lstlast.c \
 	ft_lstmap.c ft_lstnew.c ft_lstsize.c ft_tolower.c ft_toupper.c \
 	ft_atol.c ft_split.c \
 	string/ft_strncpy.c string/ft_strchr.c string/ft_strdup.c string/ft_striteri.c string/ft_strjoin.c string/ft_strlcat.c string/ft_strlcpy.c string/ft_strlen.c string/ft_strmapi.c string/ft_strncmp.c string/ft_strnstr.c string/ft_strrchr.c string/ft_strtrim.c string/ft_substr.c string/ft_strndup.c string/str_utils.c string/ft_str_equal.c string/ft_str_add.c \
 	get_next_line.c get_next_line_utils.c \
-	ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c \
 	print/ft_printf.c print/ft_print_special.c print/ft_print_basic.c \
-	memory/s_alloc.c \
+	memory/ft_calloc.c memory/ft_safe_free.c memory/ft_memset.c memory/ft_bzero.c memory/ft_memcpy.c memory/ft_memmove.c memory/ft_memcmp.c memory/ft_memchr.c \
 	data/ft_map_lifetime.c data/ft_map.c data/ft_map_print.c
 SRCS := $(addprefix $(SRC)/,$(SRC_FILES))
 OBJS := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRCS))
