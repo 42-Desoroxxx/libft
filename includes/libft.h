@@ -6,7 +6,7 @@
 /*   By: llage <desoroxxx@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:31:29 by llage             #+#    #+#             */
-/*   Updated: 2025/08/25 07:27:45 by llage            ###   ########.fr       */
+/*   Updated: 2025/09/03 19:07:26 by llage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <stdbool.h>
+# include <stdint.h>
 
 typedef struct s_list
 {
@@ -68,5 +69,6 @@ char		*ft_strndup(const char *str, size_t n);
 char		*ft_strdup(const char *str);
 bool		ft_str_equal(const char *s1, const char *s2);
 char		*ft_str_add(char const *dest, char const *src);
+char		*ft_byte_to_str(const uint8_t status);
 
 #endif
