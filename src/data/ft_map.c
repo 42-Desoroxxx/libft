@@ -70,7 +70,7 @@ bool	map_set(t_map *map, char *key, char *value)
 	temp = get_entry(map, key);
 	if (temp != NULL)
 	{
-		free(temp->value);
+		ft_safe_free((void **) &temp->value);
 		temp->value = ft_strdup(value);
 		return (true);
 	}
@@ -78,6 +78,11 @@ bool	map_set(t_map *map, char *key, char *value)
 	map->entries[map->size - 1].key = ft_strdup(key);
 	if (map->entries[map->size - 1].key == NULL)
 		return (false);
+	if (value == NULL)
+	{
+		map->entries[map->size - 1].value = NULL;
+		return (true);
+	}
 	map->entries[map->size - 1].value = ft_strdup(value);
 	if (map->entries[map->size - 1].value == NULL)
 		return (false);
@@ -96,10 +101,8 @@ bool	map_unset(t_map *map, char *key)
 	temp = get_entry(map, key);
 	if (temp == NULL)
 		return (true);
-	free(temp->key);
-	temp->key = NULL;
-	free(temp->value);
-	temp->value = NULL;
+	ft_safe_free((void **) &temp->key);
+	ft_safe_free((void **) &temp->value);
 	temp = ft_calloc(map->size - 1, sizeof(t_map_entry));
 	if (temp == NULL)
 		return (false);
