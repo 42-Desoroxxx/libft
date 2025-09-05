@@ -71,7 +71,10 @@ bool	map_set(t_map *map, char *key, char *value)
 	if (temp != NULL)
 	{
 		ft_safe_free((void **) &temp->value);
-		temp->value = ft_strdup(value);
+		if (value == NULL)
+			temp->value = NULL;
+		else
+			temp->value = ft_strdup(value);
 		return (true);
 	}
 	grow(map);
