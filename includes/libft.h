@@ -36,7 +36,7 @@ int			ft_isprint(int c);
 int			ft_toupper(int c);
 int			ft_tolower(int c);
 int			ft_atoi(const char *str);
-long		ft_atol(const char *str);
+long long	ft_atol(const char *str);
 char		**ft_split(char const *s, char c);
 char		*ft_itoa(int n);
 t_list		*ft_lstnew(void *content);

@@ -13,7 +13,7 @@
 #include <libft.h>
 #include <limits.h>
 
-long	ft_atol(const char *str)
+long long	ft_atol(const char *str)
 {
 	long long	result;
 	int			sign;
