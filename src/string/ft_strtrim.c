@@ -12,22 +12,21 @@
 
 #include <libft.h>
 
-static short	is_in_set(char c, char const *set)
+static bool	is_in_set(char c, char const *set)
 {
 	while (*set)
 		if (*set++ == c)
-			return (1);
-	return (0);
+			return (true);
+	return (false);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t	length;
-	size_t	start;
-	size_t	end;
-	char	*result;
+	const size_t	length = ft_strlen(s1);
+	size_t			start;
+	size_t			end;
+	char			*result;
 
-	length = ft_strlen(s1);
 	start = 0;
 	while (s1[start] && is_in_set(s1[start], set))
 		start++;
