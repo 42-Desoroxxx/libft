@@ -14,6 +14,9 @@
 #include <ft_data.h>
 #include <ft_memory.h>
 
+static bool
+grow(t_map *map) __attribute__((nonnull));
+
 /*
  * @return true if successful, false otherwise
  */
@@ -33,6 +36,9 @@ static bool	grow(t_map *map)
 	map->size++;
 	return (true);
 }
+
+static t_map_entry
+			*get_entry(const t_map *map, char *key) __attribute__((nonnull));
 
 /*
  * @return the entry if successful, NULL otherwise
@@ -77,15 +83,15 @@ bool	map_set(t_map *map, char *key, char *value)
 			temp->value = ft_strdup(value);
 		return (true);
 	}
-	grow(map);
+	if (!grow(map))
+		return (false);
 	map->entries[map->size - 1].key = ft_strdup(key);
 	if (map->entries[map->size - 1].key == NULL)
 		return (false);
 	if (value == NULL)
-	{
 		map->entries[map->size - 1].value = NULL;
+	if (value == NULL)
 		return (true);
-	}
 	map->entries[map->size - 1].value = ft_strdup(value);
 	if (map->entries[map->size - 1].value == NULL)
 		return (false);

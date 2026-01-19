@@ -20,9 +20,13 @@
 #  define BUFFER_SIZE 42
 # endif
 
-char	*get_next_line(int fd);
+char
+*get_next_line(int fd);
 
-void	*free_line_return_null(char **line);
-ssize_t	ft_strlen_new_line(const char *s);
+void
+*free_line_return_null(char **line);
+
+ssize_t
+ft_strlen_new_line(const char *s);
 
 #endif
