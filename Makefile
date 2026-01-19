@@ -9,7 +9,7 @@
 # |  $$$$$$/|  $$$$$$/ /$$$$$$$$|  $$$$$$$      | $$ \/  | $$|  $$$$$$$| $$ \  $$|  $$$$$$$  #
 #  \______/  \______/ |________/ \____  $$      |__/     |__/ \_______/|__/  \__/ \_______/  #
 #                                /$$  | $$                                                   #
-#        )))                    |  $$$$$$/                                    Version 1.6.1  #
+#        )))                    |  $$$$$$/                                    Version 1.7.1  #
 #       (((                      \______/                                                    #
 #     +-----+                                   __..--''``---....___   _..._    __           #
 #     |     |]      /    //    // //  /// //_.-'    .-/";  `        ``<._  ``.''_ `. / // /  #
@@ -19,7 +19,7 @@
 #    / // / /// //  /// / / // //   //  /// //  /  ///  //  // /// / /  ///   /   / ///  //  #
 ##############################################################################################
 
-.PHONY: all debug clean fclean re re_debug sane re_sane
+.PHONY: all debug clean fclean re re_debug sane re_sane help version
 
 NAME = libft.a
 MAKE_MODE ?= release
@@ -31,7 +31,7 @@ RED = \033[31m
 RESET = \033[0m
 
 # Compiler
-CC = cc
+COMPILER = cc
 BASE_FLAGS = \
 	-Wall -Wextra \
  	-Werror=vla -pedantic-errors -Werror=int-conversion -Werror=incompatible-pointer-types -Werror=implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations \
@@ -41,8 +41,7 @@ RELEASE_FLAGS = \
 	-Werror \
 	-O3 -ffast-math -march=native
 DEBUG_FLAGS = \
-	-g -O0 -fno-builtin -mno-omit-leaf-frame-pointer -fno-omit-frame-pointer \
-	-DDEBUG=true
+	-gfull -O0 -fno-builtin -mno-omit-leaf-frame-pointer -fno-omit-frame-pointer -DDEBUG=true
 SANE_FLAGS = \
 	-fsanitize=address,pointer-compare,pointer-subtract,leak,undefined,shift,shift-exponent,shift-base,integer-divide-by-zero,unreachable,vla-bound,null,signed-integer-overflow,bounds,alignment,float-divide-by-zero,float-cast-overflow,nonnull-attribute,returns-nonnull-attribute,bool,enum,pointer-overflow,builtin -fsanitize-address-use-after-scope
 
@@ -68,6 +67,7 @@ SRC_FILES := \
 	data/ft_map_lifetime.c data/ft_map.c data/ft_map_print.c
 SRCS := $(addprefix $(SRC)/,$(SRC_FILES))
 OBJS := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRCS))
+DEPS := $(OBJS:.o=.d)
 
 ifeq ($(MAKE_MODE),release)
 	CFLAGS = $(BASE_FLAGS) $(RELEASE_FLAGS)
@@ -83,8 +83,10 @@ else
 	endif
 endif
 
-ifeq ($(shell expr $(shell $(CC) -v 2>&1 | grep -oP 'version \K\d+') \>= 15), 1)
+COMPILER_VERSION := $(shell $(COMPILER) -v 2>&1 | grep -oP 'version \K\d+')
+ifeq ($(shell expr $(COMPILER_VERSION) \>= 15 2>/dev/null), 1)
     DEBUG_FLAGS += -fstrict-flex-arrays=3
+    LDFLAGS += -fuse-ld=lld
 endif
 
 all:
@@ -103,9 +105,9 @@ $(OBJ):
 
 $(OBJ)/%.o: $(SRC)/%.c | $(OBJ)
 	@echo "$(BLUE)Compiling$(RESET) $<..."
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(COMPILER) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
--include $(OBJS:%.o=%.d)
+-include $(DEPS)
 
 $(NAME): $(OBJS)
 	@echo "$(GREEN)Archiving$(RESET) $@..."
@@ -115,16 +117,10 @@ $(NAME): $(OBJS)
 clean:
 	@echo "$(RED)Cleaning$(RESET) $(NAME)'s object files..."
 	@rm -rf $(OBJ)
-	@for lib in $(LIB_DIRS); do \
-		$(MAKE) --no-print-directory -s -C $$lib clean; \
-	done
 
 fclean: clean
 	@echo "$(RED)Removing$(RESET) $(NAME)..."
 	@rm -f $(NAME)
-	@for lib in $(LIB_DIRS); do \
-		$(MAKE) --no-print-directory -s -C $$lib fclean; \
-	done
 
 re: fclean
 	@$(MAKE) -j --no-print-directory all
@@ -135,4 +131,17 @@ re_debug: fclean
 re_sane: fclean
 	@$(MAKE) -j --no-print-directory sane
 
-bonus: all
+version:
+	@echo "$(RED)Cozy Make version:$(RESET) 1.7.1"
+	@$(COMPILER) --version
+
+help:
+	@echo "$(GREEN)Available targets:$(RESET)"
+	@echo "  $(BLUE)all       $(RESET)- Build in release mode (default)"
+	@echo "  $(BLUE)debug     $(RESET)- Build with debug symbols"
+	@echo "  $(BLUE)sane      $(RESET)- Build with sanitizers"
+	@echo "  $(BLUE)clean     $(RESET)- Remove object files"
+	@echo "  $(BLUE)fclean    $(RESET)- Remove all build artifacts"
+	@echo "  $(BLUE)re        $(RESET)- Rebuild in release mode"
+	@echo "  $(BLUE)re_debug  $(RESET)- Rebuild in debug mode"
+	@echo "  $(BLUE)re_sane   $(RESET)- Rebuild with sanitizers"
