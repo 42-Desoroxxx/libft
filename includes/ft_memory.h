@@ -26,7 +26,7 @@ ft_safe_free(void **ptr);
 // --- Manipulation ---
 
 void
-*ft_memset(void *s, int c, size_t n) __attribute__((nonnull));
+*ft_memset(void *s, int c, size_t n) __attribute__((nonnull, returns_nonnull));
 
 void
 ft_bzero(void *s, size_t n) __attribute__((nonnull));
