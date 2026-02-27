@@ -25,14 +25,14 @@ char	*ft_strtrim(char const *s1, char const *set)
 	const size_t	length = ft_strlen(s1);
 	size_t			start;
 	size_t			end;
-	char			*result;
 
 	start = 0;
 	while (s1[start] && is_in_set(s1[start], set))
 		start++;
+	if (s1[start] == '\0')
+		return (ft_strdup(""));
 	end = length - 1;
-	while (s1[end] && is_in_set(s1[end], set))
+	while (end > start && is_in_set(s1[end], set))
 		end--;
-	result = ft_substr(s1, start, (end - start) + 1);
-	return (result);
+	return (ft_substr(s1, start, (end - start) + 1));
 }
