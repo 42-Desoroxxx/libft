@@ -9,7 +9,7 @@
 # |  $$$$$$/|  $$$$$$/ /$$$$$$$$|  $$$$$$$      | $$ \/  | $$|  $$$$$$$| $$ \  $$|  $$$$$$$  #
 #  \______/  \______/ |________/ \____  $$      |__/     |__/ \_______/|__/  \__/ \_______/  #
 #                                /$$  | $$                                                   #
-#        )))                    |  $$$$$$/                                    Version 1.7.1  #
+#        )))                    |  $$$$$$/                                    Version 1.7.3  #
 #       (((                      \______/                                                    #
 #     +-----+                                   __..--''``---....___   _..._    __           #
 #     |     |]      /    //    // //  /// //_.-'    .-/";  `        ``<._  ``.''_ `. / // /  #
@@ -34,6 +34,7 @@ RESET = \033[0m
 COMPILER = cc
 BASE_FLAGS = \
 	-Wall -Wextra \
+	-std=c17 \
  	-Werror=vla -pedantic-errors -Werror=int-conversion -Werror=incompatible-pointer-types -Werror=implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations \
 	-MMD \
 	-flto=thin
@@ -69,24 +70,27 @@ SRCS := $(addprefix $(SRC)/,$(SRC_FILES))
 OBJS := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRCS))
 DEPS := $(OBJS:.o=.d)
 
+COMPILER_VERSION := $(shell $(COMPILER) -v 2>&1 | grep -oP 'version \K\d+')
+ifeq ($(shell expr $(COMPILER_VERSION) \>= 15 2>/dev/null), 1)
+	BASE_FLAGS += -Wno-c23-extensions
+	DEBUG_FLAGS += -fstrict-flex-arrays=3
+	LDFLAGS += -fuse-ld=lld
+else
+	BASE_FLAGS += -Wno-fixed-enum-extension
+endif
+
 ifeq ($(MAKE_MODE),release)
 	CFLAGS = $(BASE_FLAGS) $(RELEASE_FLAGS)
 else
 	ifeq ($(MAKE_MODE),debug)
 		CFLAGS = $(BASE_FLAGS) $(DEBUG_FLAGS)
 	else
-	 ifeq ($(MAKE_MODE),sane)
-	 	CFLAGS = $(BASE_FLAGS) $(DEBUG_FLAGS) $(SANE_FLAGS)
-	 else
-		$(error Unknown mode)
+		ifeq ($(MAKE_MODE),sane)
+	 		CFLAGS = $(BASE_FLAGS) $(DEBUG_FLAGS) $(SANE_FLAGS)
+	 	else
+			$(error Unknown mode)
 		endif
 	endif
-endif
-
-COMPILER_VERSION := $(shell $(COMPILER) -v 2>&1 | grep -oP 'version \K\d+')
-ifeq ($(shell expr $(COMPILER_VERSION) \>= 15 2>/dev/null), 1)
-    DEBUG_FLAGS += -fstrict-flex-arrays=3
-    LDFLAGS += -fuse-ld=lld
 endif
 
 all:
@@ -132,7 +136,7 @@ re_sane: fclean
 	@$(MAKE) -j --no-print-directory sane
 
 version:
-	@echo "$(RED)Cozy Make version:$(RESET) 1.7.1"
+	@echo "$(RED)Cozy Make version:$(RESET) 1.7.3"
 	@$(COMPILER) --version
 
 help:
